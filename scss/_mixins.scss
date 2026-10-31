@@ -1,0 +1,13 @@
+@use 'variables' as *;
+
+@mixin flex($justify: space-between, $align: center, $gap: 0) { display: flex; justify-content: $justify; align-items: $align; gap: $gap; }
+@mixin position($type: absolute, $top: auto, $right: auto, $bottom: auto, $left: auto) { position: $type; inset: $top $right $bottom $left; }
+@mixin font($size: 11px, $weight: 500, $spacing: .1em) { font-size: $size; font-weight: $weight; letter-spacing: $spacing; }
+@mixin grid($columns, $gap: 0) { display: grid; grid-template-columns: $columns; gap: $gap; }
+@mixin size($width, $height: $width) { width: $width; height: $height; }
+@mixin symbol($size: 24px, $weight: 400, $fill: 1) { font-size: $size; font-weight: $weight; font-variation-settings: 'wght' $weight, 'FILL' $fill; line-height: 1; }
+
+
+@mixin blur($amount: $blur) { -webkit-backdrop-filter: blur($amount); backdrop-filter: blur($amount); }
+@mixin mobile { @media (max-width: $mobile) { @content; } }
+@mixin reduced-motion { @media (prefers-reduced-motion: reduce) { @content; } }

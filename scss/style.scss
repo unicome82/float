@@ -1,0 +1,263 @@
+@use 'sass:list';
+@use 'reset';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+body {
+  height: 100dvh;
+  overflow: hidden;
+  background: $paper;
+  color: $ink;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  isolation: isolate;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.header {
+  @include position(fixed, 0, 0, auto, 0);
+  @include flex;
+  height: $header-height;
+  padding: 0 $frame-padding;
+  z-index: 2;
+  pointer-events: none;
+  transition: transform .3s ease, visibility .3s;
+  @include reduced-motion { transition: none; }
+
+  &.is-hidden { transform: translateY(-100%); visibility: hidden; }
+
+  &::before {
+    content: '';
+    @include position(absolute, 0, 0, -24px, 0);
+    @include blur;
+    -webkit-mask-image: linear-gradient(to bottom, $ink calc(100% - 24px), transparent);
+    mask-image: linear-gradient(to bottom, $ink calc(100% - 24px), transparent);
+    z-index: -1;
+  }
+
+  .logo {
+    @include font(36px, 900, -.075em);
+    line-height: 1;
+    span { color: list.nth($palette, 1); }
+  }
+
+  .edition {
+    @include font(10px, 400, .12em);
+    @include mobile { font-size: 9px; }
+  }
+}
+
+.playground {
+  @include position(fixed, 0, 0, 0, 0);
+  overflow: hidden;
+  touch-action: none;
+
+  .shapes {
+    @include position(absolute, 0, 0, 0, 0);
+    isolation: isolate;
+    pointer-events: none;
+
+    @each $mode in $blend-modes {
+      &.blend-#{$mode} { .shape { mix-blend-mode: $mode; } }
+    }
+
+    .shape {
+      @include position(absolute, 0, auto, auto, 0);
+      will-change: transform;
+
+      &.type-circle, &.type-ellipse { border-radius: 50%; }
+      &.type-capsule { border-radius: 999px; }
+      &.type-arch { border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+      @for $i from 1 through list.length($palette) {
+        &.color-#{$i} { background: rgba(list.nth($palette, $i), $shape-alpha); }
+      }
+    }
+
+    &.blend-normal { .shape { @include blur; } }
+  }
+}
+
+.adjust {
+  @include position(fixed, auto, 20px, calc(20px + env(safe-area-inset-bottom)), auto);
+  @include flex(center);
+  @include size(48px);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: $ink;
+  color: $paper;
+  @include font(11px, 600, .1em);
+  z-index: 20;
+  @include blur;
+
+  .material-symbols-rounded {
+    @include symbol(22px);
+  }
+
+}
+
+.popup-backdrop {
+  @include position(fixed, 0, 0, 0, 0);
+  z-index: 25;
+}
+
+.settings-popup {
+  @include position(fixed, auto, 0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: 70dvh;
+  padding: 0;
+  overflow: visible;
+  color: $ink;
+  z-index: 30;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: transform .3s ease, visibility .3s;
+  @include reduced-motion { transition: none; }
+  @include mobile {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  &.is-open { visibility: visible; transform: translateY(0); }
+  &.is-dragging { transition: none; }
+
+  &::before {
+    content: '';
+    @include position(absolute, -24px, 0, 0, 0);
+    @include blur(8px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, $ink 24px);
+    mask-image: linear-gradient(to bottom, transparent, $ink 24px);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .heading {
+    @include flex;
+    touch-action: none;
+    cursor: grab;
+    flex-shrink: 0;
+    height: $header-height;
+    padding: 0 $frame-padding;
+    @include mobile { padding: 0 20px; }
+    h2 { margin: 0; @include font(11px, 600, .12em); }
+    .close {
+      @include flex(center);
+      @include size(36px);
+      margin-right:-8px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: $ink;
+      font-size: 24px;
+      .material-symbols-rounded {
+        @include symbol(24px, 200);
+      }
+    }
+  }
+
+  .controls {
+    @include grid(repeat(2, minmax(0, 1fr)), 40px 48px);
+    flex: 0 1 auto;
+    min-height: 0;
+    align-content: start;
+    padding: 20px $frame-padding 28px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 3vh;
+      padding: 16px 20px 20px;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
+    }
+
+    .field {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      legend, label {
+        display: block;
+        padding: 0;
+        @include font(10px, 500, .1em);
+      }
+      &.type-range {
+        label { @include flex; }
+        output { font-size: 12px; letter-spacing: 0; font-weight:800;}
+        input {
+          display: block;
+          @include size(100%, 32px);
+          margin: -4px 0;
+          border: 0;
+          padding: 0;
+          appearance: none;
+          -webkit-appearance: none;
+          background: transparent;
+          cursor: pointer;
+          &::-webkit-slider-runnable-track { height: $range-track-height; border: 0; border-radius: 999px; background: rgba($ink, .5); @include blur(4px); }
+          &::-moz-range-track { height: $range-track-height; border: 0; border-radius: 999px; background: rgba($ink, .5); }
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            @include size($range-thumb-size);
+            margin-top: 0;
+            transform: translateY(calc(-50% + $range-track-height / 2));
+            border: 0;
+            border-radius: 50%;
+            background: $ink;
+          }
+          &::-moz-range-thumb { @include size($range-thumb-size); border: 0; border-radius: 50%; background: $ink; }
+        }
+        .limits { @include flex; font-size: 10px; }
+      }
+      &#mode, &#blend { grid-column: 1 / -1; }
+
+      .options {
+        @include flex(flex-start, center, 8px);
+        margin: 12px calc(-1 * $frame-padding) 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0 $frame-padding;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        cursor: grab;
+        &::-webkit-scrollbar { display: none; }
+        &.is-dragging {
+          cursor: grabbing;
+          button { cursor: grabbing; }
+        }
+        @include mobile {
+          margin-right: -20px;
+          margin-left: -20px;
+          padding-right: 20px;
+          padding-left: 20px;
+        }
+        button {
+          flex: 0 0 auto;
+          white-space: nowrap;
+          min-height: 38px;
+          border: 0;
+          border-radius: 999px;
+          padding: 10px 16px;
+          background: rgba($ink, .1);
+          color: $ink;
+          font-size: 13px;
+          font-weight: 400;
+          @include blur(8px);
+          &[aria-pressed='true'] { background: $ink; color: $paper; 
+          font-weight: 600;}
+          &:disabled { opacity: .35; cursor: default; }
+        }
+      }
+    }
+  }
+}
+:focus-visible { outline: none; }
+
+.status {
+  @include position(fixed, auto, $gutter, 100px, $gutter);
+  @include font(12px);
+  background: $paper;
+  padding: 12px;
+  z-index: 3;
+}
