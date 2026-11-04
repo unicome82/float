@@ -35,12 +35,8 @@
       <div class="field type-range"><label for="size">SHAPE SIZE <output id="size-value" for="size">100%</output></label><input id="size" type="range" min="50" max="150" step="5" value="100"><div class="limits" aria-hidden="true"><span>50%</span><span>150%</span></div></div>
       <div class="field type-range"><label for="count">SHAPE COUNT <output id="count-value" for="count">15</output></label><input id="count" type="range" min="3" max="30" step="1" value="15"><div class="limits" aria-hidden="true"><span>3</span><span>30</span></div></div>
       <div class="field tilt-control">
-        <span class="tilt-label" id="tilt-label">DEVICE TILT</span>
-        <div class="tilt-actions" role="group" aria-labelledby="tilt-label">
-          <button id="tilt-toggle" type="button" aria-pressed="false" aria-describedby="tilt-hint">Enable tilt</button>
-          <button id="tilt-recenter" type="button" hidden>Recenter</button>
-        </div>
-        <p id="tilt-hint" aria-live="polite">Hold your phone comfortably, then enable tilt.</p>
+        <label class="tilt-label" for="tilt-toggle">Device Tilt</label>
+        <button id="tilt-toggle" class="tilt-switch" type="button" role="switch" aria-checked="false"><span aria-hidden="true"></span></button>
       </div>
       <fieldset class="field" id="mode"><legend>INTERACTION</legend><div class="options" role="group" aria-label="INTERACTION"><button type="button" data-value="float" aria-pressed="false">Float</button>
 <button type="button" data-value="repel" aria-pressed="true">Repel</button>

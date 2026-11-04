@@ -113,33 +113,17 @@
   const random = (min, max) => min + Math.random() * (max - min);
 
   const tiltToggle = document.querySelector('#tilt-toggle');
-  const tiltRecenter = document.querySelector('#tilt-recenter');
-  const tiltHint = document.querySelector('#tilt-hint');
-  const tiltMessages = {
-    pending: 'Allow motion access to use device tilt.',
-    waiting: 'Hold still briefly to set your neutral position.',
-    enabled: 'Tilt gently to move shapes. Recenter to change your neutral position.',
-    off: 'Hold your phone comfortably, then enable tilt.',
-    denied: 'Motion access was not allowed. You can retry or keep using touch.',
-    unavailable: 'No tilt readings received. Touch controls are still available.'
-  };
   const tilt = new FloatTilt.Tilt(state => {
     const active = state === 'waiting' || state === 'enabled';
     tiltToggle.disabled = state === 'pending';
-    tiltToggle.textContent = state === 'pending' ? 'Waiting for permission…' : active ? 'Disable tilt' : 'Enable tilt';
-    tiltToggle.setAttribute('aria-pressed', String(active));
-    tiltRecenter.hidden = !active;
-    tiltHint.textContent = tiltMessages[state];
+    tiltToggle.setAttribute('aria-busy', String(state === 'pending'));
+    tiltToggle.setAttribute('aria-checked', String(active));
   });
-  if (!tilt.supported) {
-    tiltToggle.disabled = true;
-    tiltHint.textContent = 'Device tilt is unavailable here. Touch controls are still available.';
-  }
+  if (!tilt.supported) tiltToggle.disabled = true;
   tiltToggle.addEventListener('click', () => {
     if (tilt.enabled) tilt.disable();
     else tilt.enable();
   });
-  tiltRecenter.addEventListener('click', () => tilt.recenter());
 
   function updateTilt(dt) {
     const direction = tilt.step(dt);

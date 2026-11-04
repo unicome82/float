@@ -563,10 +563,13 @@ body {
   padding: 12px;
   z-index: 3;
 }
-.tilt-control { grid-column: 1 / -1; }
-.tilt-control .tilt-label { display: block; font-size: 10px; font-weight: 500; letter-spacing: .1em; }
-.tilt-control .tilt-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-.tilt-control button { min-height: 38px; padding: 10px 16px; border: 0; border-radius: 999px; background: rgba(36, 37, 31, .1); color: #24251f; font-size: 13px; }
-.tilt-control button[aria-pressed='true'] { background: #24251f; color: #f7f6f2; }
-.tilt-control button:disabled { opacity: .5; cursor: default; }
-.tilt-control #tilt-hint { margin-top: 10px; font-size: 11px; line-height: 1.5; opacity: .75; }
+.tilt-control { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tilt-control .tilt-label { font-size: 13px; font-weight: 500; cursor: pointer; }
+.tilt-control .tilt-switch { flex: 0 0 auto; display: grid; place-items: center; width: 52px; height: 44px; padding: 0; border: 0; background: transparent; }
+.tilt-control .tilt-switch span { position: relative; display: block; width: 44px; height: 26px; border-radius: 999px; background: rgba(36, 37, 31, .2); transition: background .2s ease; }
+.tilt-control .tilt-switch span::after { content: ''; position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #f7f6f2; transition: transform .2s ease; }
+.tilt-control .tilt-switch[aria-checked='true'] span { background: #24251f; }
+.tilt-control .tilt-switch[aria-checked='true'] span::after { transform: translateX(18px); }
+.tilt-control .tilt-switch:disabled { opacity: .4; cursor: default; }
+.tilt-control .tilt-switch:focus-visible { outline: 2px solid #24251f; outline-offset: 2px; border-radius: 999px; }
+@media (prefers-reduced-motion: reduce) { .tilt-control .tilt-switch span, .tilt-control .tilt-switch span::after { transition: none; } }
