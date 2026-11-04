@@ -1,8 +1,8 @@
 // Bump this version whenever a precached file changes.
 const CACHE_PREFIX = `float-offline-${self.registration.scope}-`;
-const CACHE_NAME = `${CACHE_PREFIX}v2`;
+const CACHE_NAME = `${CACHE_PREFIX}v3`;
 const ASSETS = [
-  './', './index.html', './scss/style.css', './js/app.js', './js/offline.js',
+  './', './index.html', './scss/style.css', './js/app.js', './js/tilt.js', './js/offline.js',
   './assets/vendor/matter.min.js', './assets/fonts/fonts.css',
   './assets/fonts/inter.woff2', './assets/fonts/symbols.woff2',
   './assets/icons/apple-touch-icon.png', './assets/icons/icon-192.png',

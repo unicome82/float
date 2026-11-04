@@ -563,3 +563,10 @@ body {
   padding: 12px;
   z-index: 3;
 }
+.tilt-control { grid-column: 1 / -1; }
+.tilt-control .tilt-label { display: block; font-size: 10px; font-weight: 500; letter-spacing: .1em; }
+.tilt-control .tilt-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.tilt-control button { min-height: 38px; padding: 10px 16px; border: 0; border-radius: 999px; background: rgba(36, 37, 31, .1); color: #24251f; font-size: 13px; }
+.tilt-control button[aria-pressed='true'] { background: #24251f; color: #f7f6f2; }
+.tilt-control button:disabled { opacity: .5; cursor: default; }
+.tilt-control #tilt-hint { margin-top: 10px; font-size: 11px; line-height: 1.5; opacity: .75; }

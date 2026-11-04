@@ -112,6 +112,42 @@
   const types = ['circle', 'arch', 'capsule', 'square', 'ellipse'];
   const random = (min, max) => min + Math.random() * (max - min);
 
+  const tiltToggle = document.querySelector('#tilt-toggle');
+  const tiltRecenter = document.querySelector('#tilt-recenter');
+  const tiltHint = document.querySelector('#tilt-hint');
+  const tiltMessages = {
+    pending: 'Allow motion access to use device tilt.',
+    waiting: 'Hold still briefly to set your neutral position.',
+    enabled: 'Tilt gently to move shapes. Recenter to change your neutral position.',
+    off: 'Hold your phone comfortably, then enable tilt.',
+    denied: 'Motion access was not allowed. You can retry or keep using touch.',
+    unavailable: 'No tilt readings received. Touch controls are still available.'
+  };
+  const tilt = new FloatTilt.Tilt(state => {
+    const active = state === 'waiting' || state === 'enabled';
+    tiltToggle.disabled = state === 'pending';
+    tiltToggle.textContent = state === 'pending' ? 'Waiting for permission…' : active ? 'Disable tilt' : 'Enable tilt';
+    tiltToggle.setAttribute('aria-pressed', String(active));
+    tiltRecenter.hidden = !active;
+    tiltHint.textContent = tiltMessages[state];
+  });
+  if (!tilt.supported) {
+    tiltToggle.disabled = true;
+    tiltHint.textContent = 'Device tilt is unavailable here. Touch controls are still available.';
+  }
+  tiltToggle.addEventListener('click', () => {
+    if (tilt.enabled) tilt.disable();
+    else tilt.enable();
+  });
+  tiltRecenter.addEventListener('click', () => tilt.recenter());
+
+  function updateTilt(dt) {
+    const direction = tilt.step(dt);
+    const strength = mode === 'gravity' ? .75 : .055;
+    engine.gravity.x = direction ? direction.x * strength : 0;
+    engine.gravity.y = direction ? direction.y * strength : mode === 'gravity' ? .65 : 0;
+  }
+
   function bounds() {
     return { left: 0, right: width, top: 0, bottom: height };
   }
@@ -335,6 +371,7 @@
     const dt = Math.min(time - (lastTime || time), 1000 / 30) * (motion.matches ? .2 : 1);
     lastTime = time;
     if (!document.hidden && dt > 0) {
+      updateTilt(dt);
       applyForces(dt);
       // Substeps keep cursor forces and collisions stable on slower devices.
       const steps = Math.ceil(dt / (1000 / 60));
@@ -396,7 +433,7 @@
     bursts.length = 0;
     const previous = mode;
     mode = modeInput.value;
-    engine.gravity.y = mode === 'gravity' ? .65 : 0;
+    updateTilt(0);
     for (const { body } of shapes) {
       body.restitution = mode === 'bounce' ? 1 : .82;
       body.frictionAir = mode === 'bounce' ? .001 : .012;
