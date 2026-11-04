@@ -39,7 +39,7 @@ CSS 컴파일은 VS Code에 설치된 Live Compilation 확장프로그램을 사
 
 - `assets/vendor/matter.min.js`: Matter.js 0.20.0 (MIT, 동봉 라이선스 참고)
 - `assets/fonts/`: Inter 가변 글꼴(SIL OFL), Material Symbols Rounded의 close/settings 부분 집합(Apache 2.0) 및 라이선스
-- `assets/icons/`: 기존 파비콘의 주황색 원을 사용한 홈 화면 아이콘
+- `assets/icons/`: 핑크 원과 노란 아치가 블러로 겹치는 홈 화면 아이콘
 - `manifest.webmanifest`, `sw.js`, `js/offline.js`: 설치 정보와 오프라인 캐시
 
 배포 시 캐시 대상 파일을 변경하면 `sw.js`의 캐시 버전도 올려 주세요. 새 버전은 기존 화면을 모두 닫은 뒤 다시 열면 적용됩니다. GitHub Pages의 `/float/` 같은 하위 경로도 지원합니다. 브라우저가 사이트 데이터를 삭제하면 온라인에서 다시 접속해 캐시를 준비해야 합니다.
