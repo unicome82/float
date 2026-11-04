@@ -21,8 +21,14 @@ button {
   display: none !important;
 }
 
+html {
+  min-height: 100%;
+  background: #f7f6f2;
+}
+
 body {
-  height: 100dvh;
+  height: 100vh;
+  height: 100lvh;
   overflow: hidden;
   background: #f7f6f2;
   color: #24251f;
@@ -47,8 +53,8 @@ body {
       -ms-flex-align: center;
           align-items: center;
   gap: 0;
-  height: 60px;
-  padding: 0 clamp(20px, 3vw, 48px);
+  height: calc(60px + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) max(clamp(20px, 3vw, 48px), env(safe-area-inset-right, 0px)) 0 max(clamp(20px, 3vw, 48px), env(safe-area-inset-left, 0px));
   z-index: 2;
   pointer-events: none;
   -webkit-transition: visibility 0.3s, -webkit-transform 0.3s ease;
@@ -98,7 +104,9 @@ body {
 
 .playground {
   position: fixed;
-  inset: 0 0 0 0;
+  inset: 0 0 auto 0;
+  height: 100vh;
+  height: 100lvh;
   overflow: hidden;
   -ms-touch-action: none;
       touch-action: none;
@@ -213,7 +221,7 @@ body {
 
 .adjust {
   position: fixed;
-  inset: auto 20px calc(20px + env(safe-area-inset-bottom)) auto;
+  inset: auto calc(20px + env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -280,10 +288,10 @@ body {
     transition: none;
   }
 }
-@media (max-width: 600px) {
-  .settings-popup {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+.settings-popup {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
 .settings-popup.is-open {
   visibility: visible;

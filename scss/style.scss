@@ -3,8 +3,14 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
+html {
+  min-height: 100%;
+  background: $paper;
+}
+
 body {
-  height: 100dvh;
+  height: 100vh;
+  height: 100lvh;
   overflow: hidden;
   background: $paper;
   color: $ink;
@@ -17,8 +23,8 @@ body {
 .header {
   @include position(fixed, 0, 0, auto, 0);
   @include flex;
-  height: $header-height;
-  padding: 0 $frame-padding;
+  height: calc(#{$header-height} + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) max(#{$frame-padding}, env(safe-area-inset-right, 0px)) 0 max(#{$frame-padding}, env(safe-area-inset-left, 0px));
   z-index: 2;
   pointer-events: none;
   transition: transform .3s ease, visibility .3s;
@@ -48,7 +54,9 @@ body {
 }
 
 .playground {
-  @include position(fixed, 0, 0, 0, 0);
+  @include position(fixed, 0, 0, auto, 0);
+  height: 100vh;
+  height: 100lvh;
   overflow: hidden;
   touch-action: none;
 
@@ -78,7 +86,7 @@ body {
 }
 
 .adjust {
-  @include position(fixed, auto, 20px, calc(20px + env(safe-area-inset-bottom)), auto);
+  @include position(fixed, auto, calc(20px + env(safe-area-inset-right, 0px)), calc(20px + env(safe-area-inset-bottom, 0px)), auto);
   @include flex(center);
   @include size(48px);
   padding: 0;
@@ -115,9 +123,9 @@ body {
   transform: translateY(100%);
   transition: transform .3s ease, visibility .3s;
   @include reduced-motion { transition: none; }
-  @include mobile {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 
   &.is-open { visibility: visible; transform: translateY(0); }
   &.is-dragging { transition: none; }

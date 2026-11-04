@@ -98,8 +98,8 @@
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const bursts = [];
   const shapes = [];
-  let width = innerWidth;
-  let height = innerHeight;
+  let width = stage.clientWidth;
+  let height = stage.clientHeight;
   let walls = [];
   let mode = modeInput.value;
   let lastTime = 0;
@@ -356,11 +356,16 @@
     if (stage.hasPointerCapture(id)) stage.releasePointerCapture(id);
   }
 
+  function stagePoint(event) {
+    const rect = stage.getBoundingClientRect();
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+  }
+
   stage.addEventListener('pointerdown', event => {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
     if (mode === 'gravity') {
       if (drag) return;
-      const point = { x: event.clientX, y: event.clientY };
+      const point = stagePoint(event);
       const body = Query.point(shapes.map(shape => shape.body), point).pop();
       if (!body) return;
       const constraint = Constraint.create({
@@ -376,11 +381,11 @@
       stage.setPointerCapture(event.pointerId);
       return;
     }
-    bursts.push({ x: event.clientX, y: event.clientY, time: elapsed });
+    bursts.push({ ...stagePoint(event), time: elapsed });
     if (bursts.length > 4) bursts.shift();
   });
   stage.addEventListener('pointermove', event => {
-    if (drag?.id === event.pointerId) drag.constraint.pointA = { x: event.clientX, y: event.clientY };
+    if (drag?.id === event.pointerId) drag.constraint.pointA = stagePoint(event);
   });
   for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
     stage.addEventListener(name, event => { if (drag?.id === event.pointerId) releaseDrag(); });
@@ -482,15 +487,15 @@
     if (document.hidden) { bursts.length = 0; releaseDrag(); resetPanelDrag(); }
     else animationFrame = requestAnimationFrame(frame);
   });
-  window.addEventListener('resize', () => {
+  function queueResize() {
     cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(() => {
       bursts.length = 0;
       releaseDrag();
       const oldWidth = width;
       const oldHeight = height;
-      width = innerWidth;
-      height = innerHeight;
+      width = stage.clientWidth;
+      height = stage.clientHeight;
       createWalls();
       for (const [index, shape] of shapes.entries()) {
         resizeShape(shape, index);
@@ -499,7 +504,9 @@
       }
       render();
     });
-  });
+  }
+  window.addEventListener('resize', queueResize);
+  new ResizeObserver(queueResize).observe(stage);
 
   createWalls();
   createShapes();

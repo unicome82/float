@@ -4,7 +4,11 @@
 
 ## 실행
 
-`index.html`을 브라우저에서 열거나 VS Code Live Server로 실행하세요. 프레임워크나 빌드 과정은 필요하지 않습니다. Matter.js를 CDN에서 불러오므로 최초 접속에 인터넷 연결이 필요합니다.
+`index.html`을 브라우저에서 열거나 VS Code Live Server로 실행하세요. 프레임워크나 빌드 과정은 필요하지 않습니다. Matter.js와 글꼴·아이콘은 `assets/`에 포함되어 외부 CDN 연결 없이 표시됩니다.
+
+로컬 확인은 프로젝트 루트에서 `python3 -m http.server 8000`으로 실행합니다. HTTPS(또는 localhost)에서 처음 접속하면 서비스 워커가 화면에 필요한 파일을 저장합니다. 저장이 끝난 뒤에는 오프라인에서도 페이지를 다시 열 수 있습니다. `file://` 실행에서는 오프라인 재접속 캐시가 동작하지 않습니다.
+
+아이폰 Safari에서 공유 → 홈 화면에 추가를 선택하면 전용 아이콘으로 설치됩니다. 홈 화면 실행은 상태 표시줄과 홈 인디케이터 영역까지 화면을 확장하며 제목과 버튼은 안전 영역 안에 배치합니다. Safari의 주소창은 iOS가 관리하므로 불투명한 주소창 위에 도형을 그릴 수는 없습니다. 아이콘을 이전에 추가했다면 삭제 후 다시 추가해야 새 아이콘이 반영될 수 있습니다.
 
 ## 조작
 
@@ -30,3 +34,12 @@ CSS 컴파일은 VS Code에 설치된 Live Compilation 확장프로그램을 사
 컬러 레퍼런스 이미지가 제공되지 않아 10가지 미드센츄리 계열 색상을 적용했습니다. 팔레트는 `scss/_variables.scss`의 `$palette`에서 변경합니다.
 
 성능 점검 방법과 측정 범위는 `PERFORMANCE.md`를 참고하세요.
+
+## 오프라인 자산 관리
+
+- `assets/vendor/matter.min.js`: Matter.js 0.20.0 (MIT, 동봉 라이선스 참고)
+- `assets/fonts/`: Inter 가변 글꼴(SIL OFL), Material Symbols Rounded의 close/settings 부분 집합(Apache 2.0) 및 라이선스
+- `assets/icons/`: 기존 파비콘의 주황색 원을 사용한 홈 화면 아이콘
+- `manifest.webmanifest`, `sw.js`, `js/offline.js`: 설치 정보와 오프라인 캐시
+
+배포 시 캐시 대상 파일을 변경하면 `sw.js`의 캐시 버전도 올려 주세요. 새 버전은 기존 화면을 모두 닫은 뒤 다시 열면 적용됩니다. GitHub Pages의 `/float/` 같은 하위 경로도 지원합니다. 브라우저가 사이트 데이터를 삭제하면 온라인에서 다시 접속해 캐시를 준비해야 합니다.
