@@ -395,6 +395,9 @@ body {
     display: none;
   }
 }
+.settings-popup .controls .range-fields { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 48px; }
+.settings-popup .controls .range-fields > .field { flex: 1 1 0; }
+@media (max-width: 600px) { .settings-popup .controls .range-fields { gap: 24px; } }
 .settings-popup .controls .field {
   min-width: 0;
   margin: 0;
@@ -564,12 +567,12 @@ body {
   z-index: 3;
 }
 .tilt-control { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.tilt-control .tilt-label { font-size: 13px; font-weight: 500; cursor: pointer; }
-.tilt-control .tilt-switch { flex: 0 0 auto; display: grid; place-items: center; width: 52px; height: 44px; padding: 0; border: 0; background: transparent; }
-.tilt-control .tilt-switch span { position: relative; display: block; width: 44px; height: 26px; border-radius: 999px; background: rgba(36, 37, 31, .2); transition: background .2s ease; }
-.tilt-control .tilt-switch span::after { content: ''; position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #f7f6f2; transition: transform .2s ease; }
+.tilt-control .tilt-label { text-transform: uppercase; cursor: pointer; }
+.tilt-control .tilt-switch { flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px; margin: 0; padding: 0; border: 0; background: transparent; }
+.tilt-control .tilt-switch span { position: relative; display: block; width: 44px; height: 24px; border-radius: 999px; background: rgba(36, 37, 31, .2); transition: background .2s ease; }
+.tilt-control .tilt-switch span::after { content: ''; position: absolute; left: 2px; top: 2px; width: 20px; height: 20px; border-radius: 50%; background: #f7f6f2; transition: transform .2s ease; }
 .tilt-control .tilt-switch[aria-checked='true'] span { background: #24251f; }
-.tilt-control .tilt-switch[aria-checked='true'] span::after { transform: translateX(18px); }
+.tilt-control .tilt-switch[aria-checked='true'] span::after { transform: translateX(20px); }
 .tilt-control .tilt-switch:disabled { opacity: .4; cursor: default; }
 .tilt-control .tilt-switch:focus-visible { outline: 2px solid #24251f; outline-offset: 2px; border-radius: 999px; }
 @media (prefers-reduced-motion: reduce) { .tilt-control .tilt-switch span, .tilt-control .tilt-switch span::after { transition: none; } }

@@ -32,8 +32,10 @@
   <section class="settings-popup" id="settings" role="dialog" aria-modal="true" aria-labelledby="settings-title" aria-hidden="true" inert>
     <div class="heading"><h2 id="settings-title">PLAYGROUND SETTINGS</h2><button class="close" type="button" aria-label="Close controls"><span class="material-symbols-rounded" aria-hidden="true">close</span></button></div>
     <div class="controls">
-      <div class="field type-range"><label for="size">SHAPE SIZE <output id="size-value" for="size">100%</output></label><input id="size" type="range" min="50" max="150" step="5" value="100"><div class="limits" aria-hidden="true"><span>50%</span><span>150%</span></div></div>
-      <div class="field type-range"><label for="count">SHAPE COUNT <output id="count-value" for="count">15</output></label><input id="count" type="range" min="3" max="30" step="1" value="15"><div class="limits" aria-hidden="true"><span>3</span><span>30</span></div></div>
+      <div class="range-fields">
+        <div class="field type-range"><label for="size">SHAPE SIZE <output id="size-value" for="size">100%</output></label><input id="size" type="range" min="50" max="150" step="5" value="100"><div class="limits" aria-hidden="true"><span>50%</span><span>150%</span></div></div>
+        <div class="field type-range"><label for="count">SHAPE COUNT <output id="count-value" for="count">15</output></label><input id="count" type="range" min="3" max="30" step="1" value="15"><div class="limits" aria-hidden="true"><span>3</span><span>30</span></div></div>
+      </div>
       <div class="field tilt-control">
         <label class="tilt-label" for="tilt-toggle">Device Tilt</label>
         <button id="tilt-toggle" class="tilt-switch" type="button" role="switch" aria-checked="false"><span aria-hidden="true"></span></button>
