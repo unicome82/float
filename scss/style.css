@@ -14,6 +14,8 @@ button, input {
 }
 
 button {
+  -webkit-appearance: none;
+  appearance: none;
   cursor: pointer;
 }
 
@@ -22,6 +24,8 @@ button {
 }
 
 html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   min-height: 100%;
   background: #f7f6f2;
 }
@@ -77,6 +81,7 @@ body {
   content: "";
   position: absolute;
   inset: 0 0 -24px 0;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   -webkit-mask-image: linear-gradient(to bottom, #24251f calc(100% - 24px), transparent);
   mask-image: linear-gradient(to bottom, #24251f calc(100% - 24px), transparent);
@@ -216,6 +221,7 @@ body {
   background: rgba(216, 199, 165, 0.6);
 }
 .playground .shapes.blend-normal .shape {
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -243,6 +249,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.1em;
   z-index: 20;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 .adjust .material-symbols-rounded {
@@ -306,6 +313,7 @@ body {
   content: "";
   position: absolute;
   inset: -24px 0 0 0;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   -webkit-mask-image: linear-gradient(to bottom, transparent, #24251f 24px);
   mask-image: linear-gradient(to bottom, transparent, #24251f 24px);
@@ -446,6 +454,7 @@ body {
   border: 0;
   border-radius: 999px;
   background: rgba(36, 37, 31, 0.5);
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
 }
 .settings-popup .controls .field.type-range input::-moz-range-track {
@@ -527,6 +536,7 @@ body {
   color: #24251f;
   font-size: 13px;
   font-weight: 400;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 .settings-popup .controls .field .options button[aria-pressed=true] {
