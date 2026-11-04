@@ -395,9 +395,11 @@ body {
     display: none;
   }
 }
-.settings-popup .controls .range-fields { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 48px; }
-.settings-popup .controls .range-fields > .field { flex: 1 1 0; }
-@media (max-width: 600px) { .settings-popup .controls .range-fields { gap: 24px; } }
+.settings-popup .controls .range-fields { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
+.settings-popup .controls .range-fields > .field { flex: 0 0 auto; }
+.settings-popup .controls .field.type-range { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.settings-popup .controls .field.type-range label { flex: 0 0 120px; }
+@media (max-width: 600px) { .settings-popup .controls .field.type-range { gap: 16px; } .settings-popup .controls .field.type-range label { flex-basis: 112px; } }
 .settings-popup .controls .field {
   min-width: 0;
   margin: 0;
@@ -430,9 +432,11 @@ body {
 }
 .settings-popup .controls .field.type-range input {
   display: block;
-  width: 100%;
+  width: auto;
   height: 32px;
-  margin: -4px 0;
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
   border: 0;
   padding: 0;
   -moz-appearance: none;
@@ -471,19 +475,6 @@ body {
   border: 0;
   border-radius: 50%;
   background: #24251f;
-}
-.settings-popup .controls .field.type-range .limits {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  gap: 0;
-  font-size: 10px;
 }
 .settings-popup .controls .field#mode, .settings-popup .controls .field#blend {
   grid-column: 1/-1;

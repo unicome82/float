@@ -183,10 +183,10 @@ body {
     .range-fields {
       grid-column: 1 / -1;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      gap: 48px;
-      > .field { flex: 1 1 0; }
-      @include mobile { gap: 24px; }
+      gap: 12px;
+      > .field { flex: 0 0 auto; }
     }
 
     .field {
@@ -200,12 +200,16 @@ body {
         @include font(10px, 500, .1em);
       }
       &.type-range {
-        label { @include flex; }
+        @include flex(space-between, center, 24px);
+        @include mobile { gap: 16px; }
+        label { @include flex; flex: 0 0 120px; @include mobile { flex-basis: 112px; } }
         output { font-size: 12px; letter-spacing: 0; font-weight:800;}
         input {
           display: block;
-          @include size(100%, 32px);
-          margin: -4px 0;
+          @include size(auto, 32px);
+          flex: 1 1 0;
+          min-width: 0;
+          margin: 0;
           border: 0;
           padding: 0;
           appearance: none;
@@ -225,7 +229,6 @@ body {
           }
           &::-moz-range-thumb { @include size($range-thumb-size); border: 0; border-radius: 50%; background: $ink; }
         }
-        .limits { @include flex; font-size: 10px; }
       }
       &#mode, &#blend { grid-column: 1 / -1; }
 
