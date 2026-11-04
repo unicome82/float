@@ -7,6 +7,8 @@ $blur: 12px;
 $shape-alpha: .6;
 $range-track-height: 1px;
 $range-thumb-size: 18px;
+$range-thumb-hit-size: 40px;
+$range-thumb-hit-padding: calc(($range-thumb-hit-size - $range-thumb-size) / 2);
 $mobile: 600px;
 $blend-modes: normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color, luminosity, plus-darker, plus-lighter;
 $palette: #e95732, #f2b830, #e889a6, #a1a9d3, #3155a3, #75814b, #bfd3b5, #823d36, #ed713c, #d8c7a5;

@@ -206,26 +206,38 @@ body {
         output { font-size: 12px; letter-spacing: 0; font-weight:800;}
         input {
           display: block;
-          @include size(100%, 32px);
-          margin: -4px 0;
+          // Expand the transparent hit box without moving the visible endpoints.
+          @include size(calc(100% + $range-thumb-hit-padding * 2), 44px);
+          margin: -4px calc(-1 * $range-thumb-hit-padding);
+          box-shadow: none;
           border: 0;
           padding: 0;
           appearance: none;
           -webkit-appearance: none;
           background: transparent;
           cursor: pointer;
-          &::-webkit-slider-runnable-track { height: $range-track-height; border: 0; border-radius: 999px; background: rgba($ink, .5); @include blur(4px); }
-          &::-moz-range-track { height: $range-track-height; border: 0; border-radius: 999px; background: rgba($ink, .5); }
+          &::-webkit-slider-runnable-track { height: $range-track-height; border: 0; border-radius: 999px; background: linear-gradient(rgba($ink, .5), rgba($ink, .5)) center / calc(100% - $range-thumb-hit-padding * 2) 1px no-repeat; box-shadow: none; @include blur(4px); }
+          &::-moz-range-track { height: $range-track-height; border: 0; border-radius: 999px; background: linear-gradient(rgba($ink, .5), rgba($ink, .5)) center / calc(100% - $range-thumb-hit-padding * 2) 1px no-repeat; box-shadow: none; }
           &::-webkit-slider-thumb {
             -webkit-appearance: none;
-            @include size($range-thumb-size);
-            margin-top: 0;
-            transform: translateY(calc(-50% + $range-track-height / 2));
-            border: 0;
+            box-sizing: border-box;
+            @include size($range-thumb-hit-size);
+            margin-top: calc(($range-track-height - $range-thumb-hit-size) / 2);
+            border: $range-thumb-hit-padding solid transparent;
             border-radius: 50%;
             background: $ink;
+            background-clip: content-box;
+            box-shadow: none;
           }
-          &::-moz-range-thumb { @include size($range-thumb-size); border: 0; border-radius: 50%; background: $ink; }
+          &::-moz-range-thumb {
+            box-sizing: border-box;
+            @include size($range-thumb-hit-size);
+            border: $range-thumb-hit-padding solid transparent;
+            border-radius: 50%;
+            background: $ink;
+            background-clip: content-box;
+            box-shadow: none;
+          }
         }
       }
       &#mode, &#blend { grid-column: 1 / -1; }
@@ -325,3 +337,5 @@ body {
     @include reduced-motion { span, span::after { transition: none; } }
   }
 }
+
+.settings-popup .controls .field.tilt-control { padding-bottom: 12px; }
