@@ -1,12 +1,13 @@
 // Bump this version whenever a precached file changes.
 const CACHE_PREFIX = `float-offline-${self.registration.scope}-`;
-const CACHE_NAME = `${CACHE_PREFIX}v10`;
+const CACHE_NAME = `${CACHE_PREFIX}v11`;
 const ASSETS = [
   './', './index.html', './scss/style.css', './js/app.js', './js/tilt.js', './js/offline.js',
   './assets/vendor/matter.min.js', './assets/fonts/fonts.css',
   './assets/fonts/inter.woff2', './assets/fonts/symbols.woff2',
-  './assets/icons/apple-touch-icon.png', './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png', './manifest.webmanifest'
+  './assets/icons/pink-yellow-180.png', './assets/icons/pink-yellow-192.png',
+  './assets/icons/pink-yellow-512.png', './assets/icons/favicon-pink-yellow-32.png',
+  './assets/icons/favicon-pink-yellow.ico', './favicon.ico', './manifest.webmanifest'
 ];
 
 self.addEventListener('install', event => {
